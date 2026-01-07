@@ -1,0 +1,66 @@
+const express = require("express");
+const dotenv = require("dotenv");
+const { sequelize, testConnection } = require("./config/database");
+
+// Load environment variables
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Basic route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to Express + Sequelize + PostgreSQL API",
+    status: "Server is running",
+  });
+});
+
+// Health check route
+app.get("/health", async (req, res) => {
+  try {
+    await sequelize.authenticate();
+    res.json({
+      status: "healthy",
+      database: "connected",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "unhealthy",
+      database: "disconnected",
+      error: error.message,
+    });
+  }
+});
+
+// Import routes
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+
+// Start server
+async function startServer() {
+  try {
+    // Test database connection
+    await testConnection();
+
+    // Sync database models (use { force: true } to drop and recreate tables)
+    await sequelize.sync({ alter: true });
+    console.log("✅ Database models synced");
+
+    // Start listening
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
+startServer();
+
+module.exports = app;
