@@ -15,26 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 // Basic route
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to Express + Sequelize + PostgreSQL API",
-    status: "Server is running",
+    message: "Server running on localhost:" + PORT,
   });
-});
-
-// Health check route
-app.get("/health", async (req, res) => {
-  try {
-    await sequelize.authenticate();
-    res.json({
-      status: "healthy",
-      database: "connected",
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "unhealthy",
-      database: "disconnected",
-      error: error.message,
-    });
-  }
 });
 
 // Import routes
