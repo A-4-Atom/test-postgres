@@ -1,6 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const { sequelize, testConnection } = require("./config/database");
+const {
+  syncDatabase,
+  testDatabaseConnection,
+} = require("./utils/helperFunctions");
+
+const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 
 // Load environment variables
 dotenv.config();
@@ -19,19 +26,20 @@ app.get("/", (req, res) => {
   });
 });
 
-// Import routes
-const userRoutes = require("./routes/userRoutes");
+
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 // Start server
 async function startServer() {
   try {
     // Test database connection
-    await testConnection();
+    await testDatabaseConnection();
 
-    // Sync database models (use { force: true } to drop and recreate tables)
-    await sequelize.sync({ alter: true });
-    console.log("✅ Database models synced");
+    // Sync database models
+    // Options: { alter: true } or { force: true }
+    // await syncDatabase({ alter: true });
 
     // Start listening
     app.listen(PORT, () => {
