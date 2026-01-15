@@ -7,7 +7,6 @@ const {
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
-const commentRoutes = require("./routes/commentRoutes");
 
 // Load environment variables
 dotenv.config();
@@ -29,7 +28,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
-app.use("/api/comments", commentRoutes);
 
 // Start server
 async function startServer() {
