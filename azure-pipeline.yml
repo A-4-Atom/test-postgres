@@ -21,14 +21,3 @@ steps:
     tags: |
       $(Build.BuildId)
       latest
-
-- task: AzureCLI@2
-  displayName: Restart Web App
-  inputs:
-    azureSubscription: 'dockerhub-connection'
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az webapp restart \
-        --name test-postgres-app \
-        --resource-group docker-learn-rg
