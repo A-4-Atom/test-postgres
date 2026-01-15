@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Basic route
 app.get("/", (req, res) => {
   res.json({
-    message: "Server running on localhost:" + PORT,
+    message: "Server is running. Access API endpoints at /api/users and /api/posts",
   });
 });
 
