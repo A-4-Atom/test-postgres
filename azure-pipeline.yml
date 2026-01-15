@@ -19,5 +19,4 @@ steps:
     dockerfile: Dockerfile
     containerRegistry: dockerhub-connection
     tags: |
-      latest
       $(Build.BuildId)
