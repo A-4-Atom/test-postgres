@@ -22,4 +22,4 @@ steps:
       latest
       $(Build.BuildId)
     azureSubscription: acr-service-connection
-    azureContainerRegistry: mydockerlearnacr.azurecr.io
+    azureContainerRegistry: mydockerlearnacr
