@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Basic route
 app.get("/", (req, res) => {
   res.json({
-    message: "Server is running(test if CD Works 1123). Access API endpoints at /api/users and /api/posts",
+    message: "Server is running(test if CD Works 0000). Access API endpoints at /api/users and /api/posts",
   });
 });
 
