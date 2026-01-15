@@ -16,10 +16,10 @@ steps:
   displayName: Build and Push Docker Image
   inputs:
     command: buildAndPush
-    repository: $(imageName)
+    repository: mydockerlearnacr.azurecr.io/test-postgres
     dockerfile: Dockerfile
     tags: |
       latest
       $(Build.BuildId)
     azureSubscription: acr-service-connection
-    azureContainerRegistry: $(acrLoginServer)
+    azureContainerRegistry: mydockerlearnacr.azurecr.io
