@@ -5,8 +5,7 @@ trigger:
 
 variables:
   imageName: test-postgres
-  acrName: mydockerlearnacr
-  acrLoginServer: mydockerlearnacr.azurecr.io
+  dockerHubUsername: vikas2626
 
 pool:
   vmImage: ubuntu-latest
@@ -16,10 +15,9 @@ steps:
   displayName: Build and Push Docker Image
   inputs:
     command: buildAndPush
-    repository: mydockerlearnacr.azurecr.io/test-postgres
+    repository: $(dockerHubUsername)/$(imageName)
     dockerfile: Dockerfile
+    containerRegistry: dockerhub-connection
     tags: |
       latest
       $(Build.BuildId)
-    azureSubscription: acr-service-connection
-    azureContainerRegistry: mydockerlearnacr
